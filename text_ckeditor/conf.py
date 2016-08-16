@@ -9,12 +9,13 @@ CKEDITOR_CONF = getattr(
     {
         'height': 400,
         'skin': 'minimalist',
-        'uiColor': '#ffffff',
+        'uiColor': 'ffffff',
         'toolbar': [
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript'],
-            ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['h2', 'h3', 'h4'],  # ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
             ['NumberedList', 'BulletedList'],
             ['Link', 'Unlink'],
+            ['Subscript', 'Superscript'],
             ['Source'],
             ['Maximize'],
         ],

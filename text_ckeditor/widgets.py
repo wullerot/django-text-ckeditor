@@ -13,17 +13,17 @@ from . import conf
 
 class CKEditorWidget(Textarea):
     widget = Textarea
-    template_name = 'ckeditor/widget.html'
+    template_name = 'text_ckeditor/widget.html'
 
     class Media:
         css = {
             'screen': [
-                static('ckeditor/css/widget.css'),
+                static('text_ckeditor/css/widget.css'),
             ],
         }
         js = [
-            static('ckeditor/ckeditor/ckeditor.js'),
-            static('ckeditor/js/widget.js'),
+            static('text_ckeditor/ckeditor/ckeditor.js'),
+            static('text_ckeditor/js/widget.js'),
         ]
 
     def __init__(self, *args, **kwargs):
