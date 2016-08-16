@@ -1,0 +1,36 @@
+.ckeditor-widget {
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    max.width: 100%;
+}
+
+.ckeditor-widget .cke_chrome {
+    width: 100%;
+    box-shadow: 0 0 0 0 #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc !important;
+}
+
+.ckeditor-widget .cke_inner {
+    border-radius: 4px;
+}
+
+.ckeditor-widget .cke_top {
+    border-radius: 4px 4px 0 0;
+    border-bottom-color: #ccc !important;
+}
+
+.ckeditor-widget .cke_bottom {
+    border-radius: 0 0 4px 4px;
+    border-top-color: #ccc !important;
+}
+
+.ckeditor-widget .cke_button_on,
+.ckeditor-widget .cke_button_on:hover,
+.ckeditor-widget .cke_button_on:active {
+    background: #ddd !important;
+    box-shadow: 0 0 0 0 #ccc;
+    -mox-box-shadow: 0 0 0 0 #ccc;
+    -webkit-box-shadow: 0 0 0 0 #ccc;
+}
