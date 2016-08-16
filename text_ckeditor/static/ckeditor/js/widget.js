@@ -27,16 +27,16 @@ var CKEditorWidget = ( function( $ ) {
             width: $ta.data('width') || $ta.width(),
             skin: $ta.data('skin') || skin,
             uiColor: $ta.data('uicolor') || uicolor,
-            extraPlugins: 'django_link',
-            toolbar: [
+            toolbar: $ta.data('toolbar') || [
                 ['Bold', 'Italic'],
                 ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
                 ['NumberedList', 'BulletedList'],
-                ['Django_link'],
+                ['Link', 'Unlink'],
                 ['Source'],
                 ['Maximize']
             ]
-        }
+        };
+        console.log( conf.toolbar );
         CKEDITOR.plugins.addExternal( 'django_link', '/static/ckeditor/plugins/django_link/' );
         CKEDITOR.replace(ta.id, conf);
     };

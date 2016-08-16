@@ -1,10 +1,14 @@
 from __future__ import unicode_literals
 
+import json
+
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms import Textarea
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
+
+from . import conf
 
 
 class CKEditorWidget(Textarea):
@@ -35,13 +39,22 @@ class CKEditorWidget(Textarea):
         attrs = self.build_attrs(attrs, name=name)
         attrs_tags = ' '.join(['{0}="{1}"'.format(k, v)
                               for k, v in attrs.items()])
-        data_tags = ' '.join(['data-{0}="{1}"'.format(k, v)
-                             for k, v in self.conf.items()])
         context = {
             'attrs': attrs,
             'attrs_tags': mark_safe(attrs_tags),
-            'data': self.conf,
-            'data_tags': mark_safe(data_tags),
+            'data_tags': self.data_tags,
             'value': force_text(value),
         }
         return render_to_string(self.template_name, context)
+
+    @property
+    def data_tags(self):
+        # TODO test if conf is ok
+        default = conf.CKEDITOR_CONF.copy()
+        default.update(self.conf)
+        data = []
+        for k, v in default.items():
+            if type(v) is list or type(v) is tuple or type(v) is dict:
+                v = json.dumps(v)
+            data.append("data-{0}='{1}''".format(k, v))
+        return mark_safe(' '.join(data))
