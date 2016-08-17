@@ -56,5 +56,5 @@ class CKEditorWidget(Textarea):
         for k, v in default.items():
             if type(v) is list or type(v) is tuple or type(v) is dict:
                 v = json.dumps(v)
-            data.append("data-{0}='{1}''".format(k, v))
+            data.append("data-{0}='{1}'".format(k, v))
         return mark_safe(' '.join(data))

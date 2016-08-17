@@ -36,6 +36,15 @@ var CKEditorWidget = ( function( $ ) {
                 ['Maximize']
             ]
         };
-        CKEDITOR.replace(ta.id, conf);
+        var ckeditor = CKEDITOR.replace(ta.id, conf);
+        ckeditor.on('instanceReady', ckeditor_ready);
+
+        function ckeditor_ready( e ) {
+            if( $ta.data('fullscreen') ) {
+                ckeditor.execCommand('maximize');
+            }
+        };
     };
+
+
 })( django.jQuery );
