@@ -6,6 +6,9 @@ var CKEditorWidget = ( function( $ ) {
     var uicolor = '#ffffff';
     var skin = 'flat';
     var empty = '__prefix__';
+    var extra_plugins = '';
+    var djangolink_iframe_url = ''
+    var djangolink_verify_url = ''
     var not_implemented = 'inline admin not implemented yet';
 
     $('document').ready(ready);
@@ -27,6 +30,9 @@ var CKEditorWidget = ( function( $ ) {
             width: $ta.data('width') || $ta.width(),
             skin: $ta.data('skin') || skin,
             uiColor: $ta.data('uicolor') || uicolor,
+            djangolinkIframeURL: $ta.data('djangolinkiframeurl') || djangolink_iframe_url,
+            djangolinkVerifyURL: $ta.data('djangolinkverifyurl') || djangolink_verify_url,
+            extraPlugins: $ta.data('extraplugins') || extra_plugins,
             toolbar: $ta.data('toolbar') || [
                 ['Bold', 'Italic'],
                 ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
@@ -38,7 +44,7 @@ var CKEditorWidget = ( function( $ ) {
         };
         var ckeditor = CKEDITOR.replace(ta.id, conf);
         ckeditor.on('instanceReady', ckeditor_ready);
-
+        ckeditor.config.djangolinkIframeURL
         function ckeditor_ready( e ) {
             if( $ta.data('fullscreen') ) {
                 ckeditor.execCommand('maximize');
