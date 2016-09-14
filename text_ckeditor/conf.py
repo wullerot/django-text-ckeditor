@@ -8,10 +8,7 @@ LINK_MODEL = getattr(
     'TEXT_CKEDITOR_LINK_MODEL',
     'links.Link'
 )
-LINK_MODEL_LIST = LINK_MODEL.split(".")
-LINK_MODEL_NAME = LINK_MODEL_LIST.pop()
-LINK_MODULE = '.'.join(LINK_MODEL_LIST)
-
+LINK_MODULE, LINK_MODEL_NAME = LINK_MODEL.rsplit('.', 1)
 LINK_IFRAME_URL = reverse_lazy(
     'admin:{0}_{1}_add'.format(
         LINK_MODULE,
@@ -37,7 +34,7 @@ CKEDITOR_CONF = getattr(
             ['Bold', 'Italic', 'Underline', 'Strike'],
             ['h1', 'h2', 'h3'],  # ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
             ['NumberedList', 'BulletedList'],
-            ['DjangoLink', 'Unlink'],
+            ['Link', 'DjangoLink', 'Unlink'],
             ['Subscript', 'Superscript'],
             ['Source'],
             ['Maximize'],

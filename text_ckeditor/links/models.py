@@ -27,13 +27,12 @@ class Link(models.Model):
     def get_link(self):
         return self.url or 'mailto:{0}'.format(self.email)
 
-    @property
-    def href(self):
-        return self.get_link()
-
-    @property
-    def target_tag(self):
+    def get_target(self):
         if self.target:
             return self.target
         else:
             return ''
+
+    @property
+    def href(self):
+        return self.get_link()

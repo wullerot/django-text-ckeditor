@@ -45,12 +45,11 @@ var CKEditorWidget = ( function( $ ) {
         var ckeditor = CKEDITOR.replace(ta.id, conf);
         ckeditor.on('instanceReady', ckeditor_ready);
         ckeditor.config.djangolinkIframeURL
+
         function ckeditor_ready( e ) {
             if( $ta.data('fullscreen') ) {
                 ckeditor.execCommand('maximize');
             }
         };
     };
-
-
 })( django.jQuery );

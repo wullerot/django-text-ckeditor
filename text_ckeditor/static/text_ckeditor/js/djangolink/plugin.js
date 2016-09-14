@@ -57,13 +57,6 @@
             var that = this;
             this.editor = editor;
 
-            // mess with the original
-            try {
-                delete editor._.menuItems.link;
-            } catch ( error ) {
-                // stay silent if no link is there
-            }
-
             var allowed = 'a[!href, data-*]',
                 required = 'a[href]';
 
@@ -71,9 +64,9 @@
                 allowedContent: allowed,
                 requiredContent: required,
                 exec: function () {
-                    var selection = that.editor.getSelection();
+                    var selection = editor.getSelection();
                     var element = selection.getSelectedElement() || selection.getCommonAncestor().getAscendant('a', true);
-                    that.editLink(element);
+                    that.editLink(element, editor);
                 }
             });
 
@@ -110,7 +103,6 @@
                 if ( evt.data.dialog in { djangolink: 1, anchor: 1 } && evt.data.link )
                     editor.getSelection().selectElement( evt.data.link );
             }, null, null, 20 );
-
             // If the "menu" plugin is loaded, register the menu items.
             if ( editor.addMenuItems ) {
                 editor.addMenuItems( {
@@ -146,10 +138,10 @@
 
         },
 
-        editLink:function(element) {
+        editLink:function(element, editor) {
             var $body = $('body');
             var that = this;
-            this.editor.openDialog('djangolink');
+            editor.openDialog('djangolink');
         },
 
         afterInit: function( editor ) {

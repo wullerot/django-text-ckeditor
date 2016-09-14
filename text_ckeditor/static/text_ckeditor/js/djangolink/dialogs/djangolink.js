@@ -27,7 +27,6 @@
             }],
             'onOk': function () {
                 // original link:804!
-                var editor = this.getParentEditor();
                 var $iframe = $(CKEDITOR.dialog.getCurrent().parts.contents.$).find('iframe').contents();
                 var $form = $iframe.find('form');
                 var $fields = $form.find("input, select");
