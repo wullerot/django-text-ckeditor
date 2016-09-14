@@ -3,21 +3,28 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
+LINK_MODEL = getattr(
+    settings,
+    'TEXT_CKEDITOR_LINK_MODEL',
+    'links.Link'
+)
+LINK_MODEL_LIST = LINK_MODEL.split(".")
+LINK_MODEL_NAME = LINK_MODEL_LIST.pop()
+LINK_MODULE = '.'.join(LINK_MODEL_LIST)
 
-LINK_IFRAME_URL = getattr(
-    settings,
-    'TEXT_CKEDITOR_LINK_IFRAME_URL',
-    '/links/link/add/'
+LINK_IFRAME_URL = reverse_lazy(
+    'admin:{0}_{1}_add'.format(
+        LINK_MODULE,
+        LINK_MODEL_NAME.lower()
+    )
 )
-LINK_VERIFY_URL = getattr(
-    settings,
-    'TEXT_CKEDITOR_LINK_VERIFY_URL',
-    '/links/link/verify/'
+LINK_VERIFY_URL = reverse_lazy(
+    'admin:{0}_{1}_verify'.format(
+        LINK_MODULE,
+        LINK_MODEL_NAME.lower()
+    )
 )
-LINK_TARGETS = [
-    ('', 'same window'),
-    ('_blank', 'new window'),
-]
+LINK_TARGETS = [('', 'same window'), ('_blank', 'new window')]
 CKEDITOR_CONF = getattr(
     settings,
     'TEXT_CKEDITOR_CONF',

@@ -13,7 +13,7 @@ class Link(models.Model):
     """
     intentionaly simple link model
     """
-    url = models.CharField(_('URL'), max_length=255, blank=True, default='')
+    url = models.URLField(_('URL'), max_length=255, blank=True, default='')
     target = models.CharField(_('target'), max_length=255, blank=True,
                               choices=conf.LINK_TARGETS, default='')
     email = models.EmailField(_('Email'), blank=True, default='')
@@ -22,7 +22,7 @@ class Link(models.Model):
         managed = False
 
     def __str__(self):
-        return 'link {0}'.format(self.pk)
+        return 'link {0}'.format(self.get_link())
 
     def get_link(self):
         return self.url or 'mailto:{0}'.format(self.email)
@@ -34,4 +34,6 @@ class Link(models.Model):
     @property
     def target_tag(self):
         if self.target:
-            return
+            return self.target
+        else:
+            return ''
