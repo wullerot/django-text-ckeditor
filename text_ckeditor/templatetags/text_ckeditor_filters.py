@@ -43,4 +43,4 @@ def text_ckeditor_link(html):
         link.set('href', link_model.href)
         if link_model.get_target():
             link.set('target', link_model.get_target())
-    return tostring(fragment)[len():-6]
+    return tostring(fragment)[len(wrappers[0]):-len(wrappers[1])]
