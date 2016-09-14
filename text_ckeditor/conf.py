@@ -42,7 +42,10 @@ CKEDITOR_CONF = getattr(
             ['Source'],
             ['Maximize'],
         ],
-        'djangolinkIframeURL': LINK_IFRAME_URL,
-        'djangolinkVerifyURL': LINK_VERIFY_URL,
     }
 )
+
+CKEDITOR_CONF.update({
+    'djangolinkIframeURL': LINK_IFRAME_URL,
+    'djangolinkVerifyURL': LINK_VERIFY_URL,
+})
