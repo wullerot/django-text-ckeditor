@@ -42,6 +42,12 @@ class CKEditorHtml(object):
                 field = key.replace('data-', '', 1)
                 value = link.attrib.pop(key)
                 if hasattr(self.empty_link, field) and value:
+                    # TODO find a proper way to do this
+                    try:
+                        value = int(value)
+                        field = '{0}_id'.format(field)
+                    except Exception as e:
+                        pass
                     kwargs.update({field: value})
         obj = self.link_model(**kwargs)
         href = obj.get_link()
