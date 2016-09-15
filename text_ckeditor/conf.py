@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.apps import apps
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
@@ -22,6 +23,16 @@ LINK_VERIFY_URL = reverse_lazy(
     )
 )
 LINK_TARGETS = [('', 'same window'), ('_blank', 'new window')]
+CKEDITOR_HTML_MARK_SAFE = getattr(
+    settings,
+    'TEXT_CKEDITOR_HTML_MARK_SAFE',
+    True
+)
+CKEDITOR_HTML_PROTECT_MAILTO = getattr(
+    settings,
+    'TEXT_CKEDITOR_HTML_PROTECT_MAILTO',
+    True
+)
 CKEDITOR_CONF = getattr(
     settings,
     'TEXT_CKEDITOR_CONF',
