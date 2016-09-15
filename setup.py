@@ -22,6 +22,8 @@ setup(
     packages=find_packages(),
     install_requires=(
         'Django>=1.8',
+        'lxml>=3.6.4',
+        'cssselect>=0.9.2',
     ),
     include_package_data=True,
     zip_safe=False,
