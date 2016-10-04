@@ -19,49 +19,50 @@ class DjangoLinkAdmin(admin.ModelAdmin):
         '''
         add our verify url.
         '''
-        my_urls = [
+        urls = [
             url(
                 r'^verify/$',
                 self.admin_site.admin_view(self.verify),
                 name=self._get_verify_url_name()
             ),
         ]
-        return my_urls + super(DjangoLinkAdmin, self).get_urls()
+        return urls + super(DjangoLinkAdmin, self).get_urls()
 
     def _get_verify_url_name(self):
         return '{0}_{1}_verify'.format(self.model._meta.app_label,
                                        self.model._meta.model_name)
 
     def verify(self, request):
-        '''
-        verify data with modelform, send through data.
-        :param request:
-        :return:
-        '''
+        # TODO cleanup this mess
         form = self.get_form(request, )(request.POST)
         if form.is_valid():
-            verified_data = form.cleaned_data
-            obj = self.model(**verified_data)
+            data = form.cleaned_data
+            obj = self.model(**data)
             link_value = ''
             # prepopulate href
-            if (getattr(obj, 'get_link', None)):
+            if hasattr(obj, 'get_link'):
                 link_value = obj.get_link()
             # basic serialize only
-            for key, value in verified_data.items():
+            for key, value in data.items():
                 if isinstance(value, models.Model):
-                    verified_data[key] = value.id
+                    data[key] = value.id
             return_data = {
                 'valid': 'true',
-                'data': verified_data,
+                'data': data,
                 'link_value': link_value
             }
         else:
-            errors = form.errors
+            errors = []
+            for k, values in form.errors.items():
+                e = [k]
+                for v in values:
+                    e.append(v)
+                errors.append(e)
             return_data = {'valid': 'false', 'errors': errors}
         return JsonResponse(return_data)
 
     def save_model(self, request, obj, form, change):
         '''
-        avoid an accidental save!
+        avoid save!
         '''
         return False

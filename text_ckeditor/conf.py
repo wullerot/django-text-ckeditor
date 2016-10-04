@@ -43,9 +43,9 @@ CKEDITOR_CONF = getattr(
         'extraPlugins': 'djangolink',
         'toolbar': [
             ['Bold', 'Italic', 'Underline', 'Strike'],
-            ['h1', 'h2', 'h3'],  # ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+            ['h1', 'h2', 'h3', 'h4'],
             ['NumberedList', 'BulletedList'],
-            ['Link', 'DjangoLink', 'Unlink'],
+            ['DjangoLink', 'Unlink'],
             ['Subscript', 'Superscript'],
             ['Source'],
             ['Maximize'],
