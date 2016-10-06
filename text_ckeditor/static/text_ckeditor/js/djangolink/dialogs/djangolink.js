@@ -71,42 +71,37 @@ var DjangoLinkDialog = ( function( $ ) {
             } else {
                 element = null;
             }
-
             // Record down the selected element in the dialog.
             // TODO find a proper way to do this
             dialog._.selectedElement = element;
-
             var data = plugin.parseLinkAttributes( element );
             var $dialog = $( dialog.parts.contents.$ );
             var $iframe = $( 'iframe', $dialog );
-            $iframe.attr( { src: iframeURL + "?_popup=true&" + $.param( data ) } );
-            $iframe.unbind( 'load' ).hide();
-            $dialog.css( { 'padding': '0' } );
-            $( '.cke_dialog_page_contents, table[role=presentation]', $dialog ).css( { height: '100%' } );
-            $( '.cke_dialog_ui_vbox_child', $dialog ).css( { padding: 0, height: '100%' } );
-            $( '.cke_dialog_ui_vbox_child iframe', $dialog ).css( { display: 'block' } );
-
-            $iframe.bind('load', function () {
-                // tweak UI
-                var $iframe_content = $(this).contents();
-                $iframe_content.find('html, body').scrollTop(0);
-                $iframe_content.find('h1').hide().end();
-                $iframe_content.find('.submit-row').hide().end();
-                $iframe_content.find('#content').css('padding', 0);
-                $iframe_content.find('#container').css('min-width', 0).css('padding', 0);
-
-                // form
-                var $form = $(this).contents().find('form');
-                $form.bind('submit', function(e) {
-                    e.preventDefault();
-                    // trigger onOK!?
-                });
-                $iframe.show(0);
-
-            });
+            style_dialog( $dialog );
+            $iframe.hide()
+                   .unbind( 'load' )
+                   .attr( { src: iframeURL + "?_popup=true&" + $.param( data ) } )
+                   .on('load', load_iframe );
         };
 
         return dialogInstance;
+    };
+
+    function style_dialog( $dialog ) {
+        $dialog.css( { 'padding': '0' } );
+        $( '.cke_dialog_page_contents, table[role=presentation]', $dialog ).css( { height: '100%' } );
+        $( '.cke_dialog_ui_vbox_child', $dialog ).css( { padding: 0, height: '100%' } );
+        $( '.cke_dialog_ui_vbox_child iframe', $dialog ).css( { display: 'block' } );
+    };
+
+    function load_iframe() {
+        var $iframe = $( this )
+        var $content = $iframe.contents();
+        $( 'html, body', $content ).scrollTop( 0 );
+        $( 'h1, .submit-row', $content ).hide().end();
+        $( '#content, #container', $content ).css({ minWidth: 0, padding: 0 });
+        $( 'form', $content ).on( 'submit', prevent_default );
+        $iframe.show();
     };
 
     function edit_link_element( selection, element, attributes, data ) {
@@ -118,10 +113,7 @@ var DjangoLinkDialog = ( function( $ ) {
 
         // Update text view when user changes protocol (#4612).
         if ( href == textView || data.type == 'email' && textView.indexOf( '@' ) != -1 ) {
-            // Short mailto link text view (#5736).
             element.setHtml( data.type == 'email' ? data.email.address : attributes.set[ 'data-cke-saved-href' ] );
-
-            // We changed the content, so need to select it again.
             selection.selectElement( element );
         }
     }
@@ -129,15 +121,9 @@ var DjangoLinkDialog = ( function( $ ) {
     function insert_link_element( editor, selection, attributes ) {
         var range = selection.getRanges()[ 0 ];
         if ( range.collapsed ) {
-            // Nothing selected insert placeholder text
-            insert_link_text( editor, range );
+            insert_link_text( editor, range ); // if Nothing is selected insert placeholder text
         }
-        // Apply style.
-        var style = new CKEDITOR.style( {
-            element: 'a',
-            attributes: attributes.set
-        } );
-
+        var style = new CKEDITOR.style( { element: 'a', attributes: attributes.set } );
         style.type = CKEDITOR.STYLE_INLINE;
         style.applyToRange( range, editor );
         range.select();
@@ -156,15 +142,19 @@ var DjangoLinkDialog = ( function( $ ) {
         // attach new errors
         for ( var i = 0; i < data.errors.length; i++ ) {
             var name = data.errors[ i ].shift();
-            var $field = $('.form-row.field-' + name, $form);
+            var $field = $( '.form-row.field-' + name, $form );
             var html = '<ul class="errorlist">';
             for ( var e = 0; e <  data.errors[ i ].length; e++ ) {
                 html += '<li>' +  data.errors[ i ][ e ] + '</li>';
             }
             html += '</ul>';
-            $field.addClass("errors");
+            $field.addClass( 'errors' );
             $field.prepend( html );
         }
+    };
+
+    function prevent_default( e ) {
+        e.preventDefault();
     };
 
 } )(django.jQuery);
