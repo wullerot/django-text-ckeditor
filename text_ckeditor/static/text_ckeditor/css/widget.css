@@ -2,7 +2,7 @@
     display: inline-block;
     vertical-align: top;
     box-sizing: border-box;
-    max.width: 100%;
+    max-width: 100%;
 }
 
 .ckeditor-widget .cke_chrome {

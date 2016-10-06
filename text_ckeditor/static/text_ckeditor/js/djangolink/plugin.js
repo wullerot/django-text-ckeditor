@@ -107,7 +107,6 @@ var DjangoLink = ( function( $ ) {
 
     function init_complete( editor ) {
         // init complete
-        console.log('heihou')
     };
 
 
