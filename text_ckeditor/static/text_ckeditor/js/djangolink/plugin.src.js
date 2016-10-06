@@ -11,31 +11,23 @@ var DjangoLink = ( function( $ ) {
         afterInit: init_complete,
     };
 
-    // Add Plugin to Editor
     CKEDITOR.plugins.add( 'djangolink', conf );
-
-    // Set Plugin helpers
     CKEDITOR.plugins.djangolink = {
         getLinkAttributes: get_link_attributes,
         getSelectedLink: get_selected_link,
         parseLinkAttributes: parse_link_attributes,
     };
 
-
     function init( editor ) {
         var plugin = this;
         var allowed = 'a[!href, data-*]';
         var required = 'a[href]';
-
-        CKEDITOR.dialog.add(
-            'djangolink',
-            this.path + 'dialogs/djangolink.js'
-        );
+        CKEDITOR.dialog.add( 'djangolink', plugin.path + 'dialogs/djangolink.js' );
         editor.addCommand( 'djangolink', {
             allowedContent: allowed,
             requiredContent: required,
             exec: exec_djangolink
-        });
+        } );
         editor.ui.addButton( 'DjangoLink', {
             label: editor.lang.link.toolbar,
             command: 'djangolink',
