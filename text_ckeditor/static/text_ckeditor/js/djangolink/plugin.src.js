@@ -104,49 +104,43 @@ var DjangoLink = ( function( $ ) {
 
     // Plugin Helpers ---------------------------------------------------------
 
-    function get_link_attributes(editor, data, link_value) {
-        /**
-         * Converts link data produced by {@link #parseLinkAttributes} into an object which consists
-         * of attributes to be set (with their values) and an array of attributes to be removed.
-         * This method can be used to compose or to update any link element with the given data.
-         *
-         * @since 4.4
-         * @param {CKEDITOR.editor} editor
-         * @param {Object} data Data in {@link #parseLinkAttributes} format.
-         * @returns {Object} An object consisting of two keys, i.e.:
-         *
-         *        {
-         *            // Attributes to be set.
-         *            set: {
-         *                href: 'http://foo.bar',
-         *                target: 'bang'
-         *            },
-         *            // Attributes to be removed.
-         *            removed: [
-         *                'id', 'style'
-         *            ]
-         *        }
-         *
-         */
-        var set = {'data-djangolink': true};
-        var removed;
-        var excludes = ['_popup', '_save', 'csrfmiddlewaretoken'];
+    /**
+     * Converts link data produced by {@link #parseLinkAttributes} into an object which consists
+     * of attributes to be set (with their values) and an array of attributes to be removed.
+     * This method can be used to compose or to update any link element with the given data.
+     *
+     * @since 4.4
+     * @param {CKEDITOR.editor} editor
+     * @param {Object} data Data in {@link #parseLinkAttributes} format.
+     * @returns {Object} An object consisting of two keys, i.e.:
+     *
+     *        {
+     *            // Attributes to be set.
+     *            set: {
+     *                href: 'http://foo.bar',
+     *                target: 'bang'
+     *            },
+     *        }
+     *
+     */
 
-        $.each(data, function(index, item) {
-            if ($.inArray(index, excludes) < 0 && item != null) {
-                set['data-' + index] = item;
+    function get_link_attributes(editor, data, link_value) {
+        var set = { 'data-djangolink': true };
+        var excludes = [ '_popup', '_save', 'csrfmiddlewaretoken' ];
+        for( var attr in data ) {
+            if ( excludes.indexOf( attr ) < 0 && data[ attr ] != null ) {
+                set[ 'data-' + attr ] = data[ attr ];
+            } else if ( data[ attr ] === null ) {
+                set[ 'data-' + attr ] = '';
             }
-        });
+        }
         set.href = '';
-        if (link_value) {
+        if ( link_value ) {
             set.href = link_value;
         }
-        removed = [];
-
         return {
             set: set,
-            // removed: CKEDITOR.tools.objectKeys( removed ) what is this?
-            removed: CKEDITOR.tools.objectKeys( removed )
+            removed: CKEDITOR.tools.objectKeys( [] )
         };
     };
 

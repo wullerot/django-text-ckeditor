@@ -52,8 +52,8 @@ var DjangoLinkDialog = ( function( $ ) {
                 } else {
                     edit_link_element( selection, element, attributes, data )
                 }
-                $( 'body', $iframe ).remove();
-                CKEDITOR.dialog.getCurrent().hide();
+                //$( 'body', $iframe ).remove();
+                //CKEDITOR.dialog.getCurrent().hide();
             };
 
             return false;
@@ -116,7 +116,7 @@ var DjangoLinkDialog = ( function( $ ) {
             element.setHtml( data.type == 'email' ? data.email.address : attributes.set[ 'data-cke-saved-href' ] );
             selection.selectElement( element );
         }
-    }
+    };
 
     function insert_link_element( editor, selection, attributes ) {
         var range = selection.getRanges()[ 0 ];
@@ -157,4 +157,4 @@ var DjangoLinkDialog = ( function( $ ) {
         e.preventDefault();
     };
 
-} )(django.jQuery);
+} )( django.jQuery );
