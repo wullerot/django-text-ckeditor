@@ -63,7 +63,7 @@ class CKEditorHtml(object):
             mail = mail_to_js(href, link_text=link.text, css_class=css_class)
             link_new = fragment_fromstring(mail)
             link.addnext(link_new)
-            fragment.remove(link)
+            link.getparent().remove(link)
         else:
             link.set('href', href)
             if hasattr(obj, 'get_target'):
