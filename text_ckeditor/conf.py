@@ -47,11 +47,14 @@ CKEDITOR_CONF = getattr(
             ['NumberedList', 'BulletedList'],
             ['DjangoLink', 'Unlink'],
             ['Subscript', 'Superscript'],
+            ['PasteText' ],
             ['Source'],
             ['Maximize'],
         ],
     }
 )
+
+print CKEDITOR_CONF
 
 CKEDITOR_CONF.update({
     'djangolinkIframeURL': LINK_IFRAME_URL,
