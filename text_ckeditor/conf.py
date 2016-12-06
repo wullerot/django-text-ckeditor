@@ -54,8 +54,6 @@ CKEDITOR_CONF = getattr(
     }
 )
 
-print CKEDITOR_CONF
-
 CKEDITOR_CONF.update({
     'djangolinkIframeURL': LINK_IFRAME_URL,
     'djangolinkVerifyURL': LINK_VERIFY_URL,
