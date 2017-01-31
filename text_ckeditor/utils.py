@@ -29,6 +29,8 @@ class CKEditorHtml(object):
         return output
 
     def _render_fragment(self, fragment):
+        if isinstance(fragment, basestring):
+            fragment = fragment_fromstring('<p>' + fragment + '</p>')
         django_links = fragment.cssselect('a[data-djangolink="true"]')
         for link in django_links:
             self._alter_link(link, fragment)
