@@ -38,7 +38,7 @@ CKEDITOR_CONF = getattr(
     'TEXT_CKEDITOR_CONF',
     {
         'height': 400,
-        'skin': 'minimalist',
+        'skin': 'Moono-Lisa',
         'uiColor': '#ffffff',
         'extraPlugins': 'djangolink',
         'toolbar': [
