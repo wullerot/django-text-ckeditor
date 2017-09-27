@@ -5,7 +5,6 @@ import re
 from lxml.html import fragments_fromstring, fragment_fromstring, tostring
 
 from django.apps import apps
-from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
 from . import conf
@@ -13,8 +12,11 @@ from . import conf
 
 class CKEditorHtml(object):
     # TODO replace data-djangolink="true" constant
-    link_model = apps.get_model(app_label=conf.LINK_MODULE,
-                                model_name=conf.LINK_MODEL_NAME)
+    link_model = apps.get_model(
+        app_label=conf.LINK_MODULE,
+        model_name=conf.LINK_MODEL_NAME
+    )
+
     def __init__(self, input):
         self.input = input
         self.empty_link = self.link_model()
@@ -48,7 +50,7 @@ class CKEditorHtml(object):
                     try:
                         value = int(value)
                         field = '{0}_id'.format(field)
-                    except Exception as e:
+                    except:
                         pass
                     kwargs.update({field: value})
         obj = self.link_model(**kwargs)
@@ -81,10 +83,10 @@ class CKEditorHtml(object):
 def mail_to_js(email, *args, **kwargs):
     result = ''
     text = kwargs.get('link_text', email)
-    css_class =  kwargs.get('css_class', '')
+    css_class = kwargs.get('css_class', '')
     email_array_content = ''
     text_array_content = ''
-    r = lambda c: '"' + str(ord(c)) + '",'
+    r = lambda c: '"' + str(ord(c)) + '",' # NOQA
     for c in email:
         email_array_content += r(c)
     for c in text:
@@ -108,5 +110,5 @@ def mail_to_js(email, *args, **kwargs):
               '}'
               'content+=(\'</a>\');'
               'document.getElementById(\'%s\').innerHTML=content;'
-              '</script></span>' %(id, re_email, re_text, css_class, id))
+              '</script></span>' % (id, re_email, re_text, css_class, id))
     return mark_safe(result)
