@@ -10,6 +10,12 @@ from django.utils.safestring import mark_safe
 from . import conf
 
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
+
 class CKEditorHtml(object):
 
     # TODO replace data-djangolink="true" constant

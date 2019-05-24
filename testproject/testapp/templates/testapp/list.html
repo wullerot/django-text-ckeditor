@@ -1,0 +1,15 @@
+<!doctype html>{% load text_ckeditor_filters %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Django: Das Webframework für Perfektionisten mit Termindruck.</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="object-list">
+            {% for obj in object_list %}
+                <div class="object">{{ obj.text_html|text_ckeditor_render }}</div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
