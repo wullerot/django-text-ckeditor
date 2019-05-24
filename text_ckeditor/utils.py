@@ -11,6 +11,7 @@ from . import conf
 
 
 class CKEditorHtml(object):
+
     # TODO replace data-djangolink="true" constant
     link_model = apps.get_model(
         app_label=conf.LINK_MODULE,
@@ -36,7 +37,7 @@ class CKEditorHtml(object):
         django_links = fragment.cssselect('a[data-djangolink="true"]')
         for link in django_links:
             self._alter_link(link, fragment)
-        return tostring(fragment)
+        return tostring(fragment, encoding='unicode')
 
     def _alter_link(self, link, fragment):
         link.attrib.pop('data-djangolink')
@@ -50,7 +51,7 @@ class CKEditorHtml(object):
                     try:
                         value = int(value)
                         field = '{0}_id'.format(field)
-                    except:
+                    except Exception:
                         pass
                     kwargs.update({field: value})
         obj = self.link_model(**kwargs)

@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.html import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from .. import conf
@@ -13,10 +12,24 @@ class Link(models.Model):
     """
     intentionaly simple link model
     """
-    url = models.URLField(_('URL'), max_length=255, blank=True, default='')
-    target = models.CharField(_('target'), max_length=255, blank=True,
-                              choices=conf.LINK_TARGETS, default='')
-    email = models.EmailField(_('Email'), blank=True, default='')
+    url = models.URLField(
+        max_length=255,
+        blank=True,
+        default='',
+        verbose_name=_('URL'),
+    )
+    target = models.CharField(
+        max_length=255,
+        blank=True,
+        choices=conf.LINK_TARGETS,
+        default='',
+        verbose_name=_('target'),
+    )
+    email = models.EmailField(
+        _('Email'),
+        blank=True,
+        default='',
+    )
 
     class Meta:
         managed = False

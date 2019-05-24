@@ -8,9 +8,15 @@ from django.http import JsonResponse
 
 class DjangoLinkAdmin(admin.ModelAdmin):
 
+    def _get_verify_url_name(self):
+        return '{}_{}_verify'.format(
+            self.model._meta.app_label,
+            self.model._meta.model_name
+        )
+
     def get_model_perms(self, request):
         '''
-        http://stackoverflow.com/questions/2431727/django-admin-hide-a-model
+        Ugly workaround
         Return empty perms dict thus hiding the model from admin index.
         '''
         return {}
@@ -27,10 +33,6 @@ class DjangoLinkAdmin(admin.ModelAdmin):
             ),
         ]
         return urls + super(DjangoLinkAdmin, self).get_urls()
-
-    def _get_verify_url_name(self):
-        return '{0}_{1}_verify'.format(self.model._meta.app_label,
-                                       self.model._meta.model_name)
 
     def verify(self, request):
         # TODO cleanup this mess
@@ -58,11 +60,14 @@ class DjangoLinkAdmin(admin.ModelAdmin):
                 for v in values:
                     e.append(v)
                 errors.append(e)
-            return_data = {'valid': 'false', 'errors': errors}
+            return_data = {
+                'valid': 'false',
+                'errors': errors
+            }
         return JsonResponse(return_data)
 
     def save_model(self, request, obj, form, change):
         '''
-        avoid save!
+        don't save the model
         '''
         return False
