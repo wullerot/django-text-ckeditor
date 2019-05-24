@@ -7,7 +7,9 @@ version = __import__('text_ckeditor').__version__
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+
 DESCRIPTION = 'CKEditor Textarea widget for rouxcode & e621'
+
 
 setup(
     name="django-text-ckeditor",
