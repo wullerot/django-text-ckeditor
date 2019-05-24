@@ -15,16 +15,16 @@ class DjangoLinkAdmin(admin.ModelAdmin):
         )
 
     def get_model_perms(self, request):
-        '''
+        """
         Ugly workaround
         Return empty perms dict thus hiding the model from admin index.
-        '''
+        """
         return {}
 
     def get_urls(self):
-        '''
+        """
         add our verify url.
-        '''
+        """
         urls = [
             url(
                 r'^verify/$',
@@ -67,7 +67,7 @@ class DjangoLinkAdmin(admin.ModelAdmin):
         return JsonResponse(return_data)
 
     def save_model(self, request, obj, form, change):
-        '''
+        """
         don't save the model
-        '''
+        """
         return False

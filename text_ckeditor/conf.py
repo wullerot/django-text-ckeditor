@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
-from django.apps import apps
+import django
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
+if django.VERSION[:2] > (2, 0):
+    from django.urls import reverse_lazy
+else:
+    from django.core.urlresolvers import reverse_lazy
+
 
 LINK_MODEL = getattr(
     settings,
@@ -10,6 +14,7 @@ LINK_MODEL = getattr(
     'links.Link'
 )
 LINK_MODULE, LINK_MODEL_NAME = LINK_MODEL.rsplit('.', 1)
+
 LINK_IFRAME_URL = reverse_lazy(
     'admin:{0}_{1}_add'.format(
         LINK_MODULE,
@@ -47,7 +52,7 @@ CKEDITOR_CONF = getattr(
             ['NumberedList', 'BulletedList'],
             ['DjangoLink', 'Unlink'],
             ['Subscript', 'Superscript'],
-            ['PasteText' ],
+            ['PasteText'],
             ['Source'],
             ['Maximize'],
         ],

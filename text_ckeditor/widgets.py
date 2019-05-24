@@ -35,7 +35,8 @@ class CKEditorWidget(Textarea):
         }
         super(CKEditorWidget, self).__init__(attrs)
 
-    def render(self, name, value='', attrs=None):
+    def render(self, name, value='', attrs=None, renderer=None):
+        # TODO implement the new renderer method from django >= 2
         try:
             # django < 1.11
             attrs = self.build_attrs(attrs, name=name)
