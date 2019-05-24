@@ -50,13 +50,12 @@ class CKEditorWidget(Textarea):
         context = {
             'attrs': attrs,
             'attrs_tags': mark_safe(attrs_tags),
-            'data_tags': self.data_tags,
+            'data_tags': self.get_data_tags(),
             'value': force_text(value),
         }
         return render_to_string(self.template_name, context)
 
-    @property
-    def data_tags(self):
+    def get_data_tags(self):
         # TODO test if conf is ok
         default = conf.CKEDITOR_CONF.copy()
         default.update(self.conf)
