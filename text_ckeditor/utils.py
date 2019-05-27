@@ -101,21 +101,22 @@ def mail_to_js(email, *args, **kwargs):
     id = "_tyjsdfss-" + str(random.randint(1000, 999999999999999999))
     re_email = re.sub(r',$', '', email_array_content)
     re_text = re.sub(r',$', '', text_array_content)
-    result = ('<span id="%s"><script>'
-              'var _tyjsdf=[%s];'
-              'var _qplmks=[%s];'
-              'var content=('
-              '\'<a class="%s" '
-              'href="&#x6d;&#97;&#105;&#x6c;&#000116;&#111;&#x3a;\''
-              ');'
-              'for(_i=0;_i<_tyjsdf.length;_i++){'
-              'content+=("&#"+_tyjsdf[_i]+";");'
-              '}'
-              'content+=(\'">\');'
-              'for(_i=0;_i<_qplmks.length;_i++){'
-              'content+=(\'&#\'+_qplmks[_i]+\';\');'
-              '}'
-              'content+=(\'</a>\');'
-              'document.getElementById(\'%s\').innerHTML=content;'
-              '</script></span>' % (id, re_email, re_text, css_class, id))
+    result = (
+        '<span id="%s"><script>'
+        'var _tyjsdf=[%s];'
+        'var _qplmks=[%s];'
+        'var content=('
+        '\'<a class="%s" href="&#x6d;&#97;&#105;&#x6c;&#000116;&#111;&#x3a;\''
+        ');'
+        'for(_i=0;_i<_tyjsdf.length;_i++){'
+        'content+=("&#"+_tyjsdf[_i]+";");'
+        '}'
+        'content+=(\'">\');'
+        'for(_i=0;_i<_qplmks.length;_i++){'
+        'content+=(\'&#\'+_qplmks[_i]+\';\');'
+        '}'
+        'content+=(\'</a>\');'
+        'document.getElementById(\'%s\').innerHTML=content;'
+        '</script></span>'
+    ) % (id, re_email, re_text, css_class, id)
     return mark_safe(result)

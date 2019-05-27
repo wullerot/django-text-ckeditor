@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from django import forms
+
 from django.conf.urls import url
 from django.contrib import admin
 from django.db import models
@@ -7,6 +9,14 @@ from django.http import JsonResponse
 
 
 class DjangoLinkAdmin(admin.ModelAdmin):
+
+    class Media:
+        css = {
+            'all': ['text_ckeditor/css/link.type.css']
+        }
+        js = [
+            'text_ckeditor/js/link.type.min.js'
+        ]
 
     def _get_verify_url_name(self):
         return '{}_{}_verify'.format(
@@ -71,3 +81,18 @@ class DjangoLinkAdmin(admin.ModelAdmin):
         don't save the model
         """
         return False
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == "link_type":
+            choices = getattr(self.model, 'LINK_TYPE_CHOICES', [])
+            if not choices:
+                db_field.widget = forms.HiddenInput
+            elif isinstance(choices, (list, tuple)):
+                db_field.choices = choices
+                db_field.widget = forms.Select
+        field = super(DjangoLinkAdmin, self).formfield_for_dbfield(
+            db_field,
+            **kwargs
+        )
+
+        return field

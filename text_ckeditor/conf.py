@@ -11,7 +11,7 @@ else:
 LINK_MODEL = getattr(
     settings,
     'TEXT_CKEDITOR_LINK_MODEL',
-    'links.Link'
+    'text_ckeditor_links.Link'
 )
 LINK_MODULE, LINK_MODEL_NAME = LINK_MODEL.rsplit('.', 1)
 

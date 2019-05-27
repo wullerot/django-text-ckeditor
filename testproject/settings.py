@@ -37,7 +37,7 @@ STATIC_URL = '/static/'
 
 INSTALLED_APPS = [
     'text_ckeditor',
-    'text_ckeditor.links',
+    'text_ckeditor.text_ckeditor_links',
     'testapp',
     'django.contrib.admin',
     'django.contrib.auth',
