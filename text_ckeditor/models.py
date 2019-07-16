@@ -13,6 +13,7 @@ class AbstractLink(models.Model):
 
     LINK_TYPE_CHOICES = [
         ('', _('---')),
+        ('link_url', _('URL')),
     ]
 
     link_type = models.CharField(
@@ -20,6 +21,12 @@ class AbstractLink(models.Model):
         blank=True,
         default='',
         verbose_name=_('Link Type'),
+    )
+
+    link_url = models.URLField(
+        blank=True,
+        default='',
+        verbose_name=_('URL'),
     )
 
     class Meta:
