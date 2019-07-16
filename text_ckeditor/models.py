@@ -22,9 +22,6 @@ class AbstractLink(models.Model):
         verbose_name=_('Link Type'),
     )
 
-    def __init__(self, *args, **kwargs):
-        super(AbstractLink, self).__init__(*args, **kwargs)
-
     class Meta:
         abstract = True
         verbose_name = _('Link')
