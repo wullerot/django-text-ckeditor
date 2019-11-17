@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import django
 from django.conf import settings
-if django.VERSION[:2] > (2, 0):
+if django.VERSION[:2] >= (2, 0):
     from django.urls import reverse_lazy
 else:
     from django.core.urlresolvers import reverse_lazy
