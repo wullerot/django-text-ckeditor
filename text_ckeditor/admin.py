@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django import forms
 
 from django.conf.urls import url
@@ -9,14 +7,6 @@ from django.http import JsonResponse
 
 
 class DjangoLinkAdmin(admin.ModelAdmin):
-
-    class Media:
-        css = {
-            'all': ['text_ckeditor/css/link.type.css']
-        }
-        js = [
-            'text_ckeditor/js/link.type.min.js'
-        ]
 
     def _get_verify_url_name(self):
         return '{}_{}_verify'.format(
