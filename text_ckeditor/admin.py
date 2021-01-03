@@ -1,6 +1,6 @@
 from django import forms
 
-from django.conf.urls import url
+from django.urls import path
 from django.contrib import admin
 from django.db import models
 from django.http import JsonResponse
@@ -26,8 +26,8 @@ class DjangoLinkAdmin(admin.ModelAdmin):
         add our verify url.
         """
         urls = [
-            url(
-                r'^verify/$',
+            path(
+                'verify/',
                 self.admin_site.admin_view(self.verify),
                 name=self._get_verify_url_name()
             ),

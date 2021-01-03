@@ -1,15 +1,13 @@
-from __future__ import unicode_literals
-
 from django.contrib import admin
-from django.conf.urls import include, url
+from django.urls import include, path
 
 urlpatterns = [
-    url(
-        r'^admin/',
+    path(
+        'admin/',
         admin.site.urls
     ),
-    url(
-        r'^',
-        include('testapp.urls')
+    path(
+        '',
+        include('testproject.testapp.urls')
     ),
 ]

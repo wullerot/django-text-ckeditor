@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import random
 import re
 from lxml.html import fragments_fromstring, fragment_fromstring, tostring
@@ -93,7 +91,7 @@ def mail_to_js(email, *args, **kwargs):
     css_class = kwargs.get('css_class', '')
     email_array_content = ''
     text_array_content = ''
-    r = lambda c: '"' + str(ord(c)) + '",' # NOQA
+    def r(c): return '"' + str(ord(c)) + '",'  # NOQA
     for c in email:
         email_array_content += r(c)
     for c in text:

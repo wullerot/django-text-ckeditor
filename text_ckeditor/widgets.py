@@ -1,8 +1,5 @@
-from __future__ import unicode_literals
-
 import json
 
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms import Textarea
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
@@ -18,12 +15,12 @@ class CKEditorWidget(Textarea):
     class Media:
         css = {
             'screen': [
-                static('text_ckeditor/css/widget.css'),
+                'text_ckeditor/css/widget.css',
             ],
         }
         js = [
-            static('text_ckeditor/ckeditor/ckeditor.js'),
-            static('text_ckeditor/js/widget.js'),
+            'text_ckeditor/ckeditor/ckeditor.js',
+            'text_ckeditor/js/widget.js',
         ]
 
     def __init__(self, *args, **kwargs):

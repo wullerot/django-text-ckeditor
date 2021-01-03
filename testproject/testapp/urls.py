@@ -1,13 +1,11 @@
-from __future__ import unicode_literals
-
-from django.conf.urls import url
+from django.urls import path
 
 from .views import TestModelListView
 
 
 urlpatterns = [
-    url(
-        r'^$',
+    path(
+        '',
         TestModelListView.as_view(),
         name='index'
     ),

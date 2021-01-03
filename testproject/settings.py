@@ -15,6 +15,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'testproject', 'static')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '%&9@q+$c*9s##ss#@0(s!8_kjhkj987,mnbkjhkjh11yjum_m&5_nak14q-+b'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,7 +39,7 @@ STATIC_URL = '/static/'
 INSTALLED_APPS = [
     'text_ckeditor',
     'text_ckeditor.text_ckeditor_links',
-    'testapp',
+    'testproject.testapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,8 +88,8 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'}, # NOQA
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'}, # NOQA
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'}, # NOQA
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}, # NOQA
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},  # NOQA
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},  # NOQA
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},  # NOQA
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},  # NOQA
 ]
