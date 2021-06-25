@@ -1,9 +1,9 @@
-var DjangoLink = (function ($) {
+var DajngoImage = (function ($) {
     'use strict';
 
     var conf = {
         requires: 'dialog,fakeobjects',
-        icons: 'DjangoLink',
+        icons: 'DajngoImage',
         hidpi: true,
         onLoad: on_load,
         init: init,
@@ -11,8 +11,8 @@ var DjangoLink = (function ($) {
         afterInit: init_complete,
     };
 
-    CKEDITOR.plugins.add('djangolink', conf);
-    CKEDITOR.plugins.djangolink = {
+    CKEDITOR.plugins.add('djangoimage', conf);
+    CKEDITOR.plugins.djangoimage = {
         getLinkAttributes: get_link_attributes,
         getSelectedLink: get_selected_link,
         parseLinkAttributes: parse_link_attributes,
@@ -22,21 +22,21 @@ var DjangoLink = (function ($) {
         var plugin = this;
         var allowed = 'a[!href, data-*]';
         var required = 'a[href]';
-        CKEDITOR.dialog.add('djangolink', plugin.path + 'dialogs/djangolink.js');
-        editor.addCommand('djangolink', {
+        CKEDITOR.dialog.add('djangoimage', plugin.path + 'dialogs/djangoimage.js');
+        editor.addCommand('djangoimage', {
             allowedContent: allowed,
             requiredContent: required,
-            exec: exec_djangolink
+            exec: exec_djangoimage
         });
-        editor.ui.addButton('DjangoLink', {
+        editor.ui.addButton('DajngoImage', {
             label: editor.lang.link.toolbar,
-            command: 'djangolink',
-            toolbar: 'djangolinks,10',
+            command: 'djangoimage',
+            toolbar: 'djangoimages,10',
             icon: 'link'
         });
         editor.on('doubleclick', select_link, null, null, 0);
 
-        function exec_djangolink() {
+        function exec_djangoimage() {
             var s = editor.getSelection();
             var el = s.getSelectedElement() || s.getCommonAncestor().getAscendant('a', true);
             plugin.editLink(el, editor);
@@ -47,11 +47,11 @@ var DjangoLink = (function ($) {
             if (!element.isReadOnly()) {
                 if (element.is('a')) {
                     // Pass the link to be selected along with event data.
-                    evt.data.dialog = 'djangolink';
+                    evt.data.dialog = 'djangoimage';
                     evt.data.link = element;
                 }
             }
-            if (evt.data.dialog in { djangolink: 1, anchor: 1 } && evt.data.link) {
+            if (evt.data.dialog in { djangoimage: 1, anchor: 1 } && evt.data.link) {
                 editor.getSelection().selectElement(evt.data.link);
             }
         };
@@ -94,7 +94,7 @@ var DjangoLink = (function ($) {
     function edit_link(element, editor) {
         var $body = $('body');
         var that = this;
-        editor.openDialog('djangolink');
+        editor.openDialog('djangoimage');
     };
 
     function init_complete(editor) {
@@ -125,7 +125,7 @@ var DjangoLink = (function ($) {
      */
 
     function get_link_attributes(editor, data, link_value) {
-        var set = { 'data-djangolink': true };
+        var set = { 'data-djangoimage': true };
         var excludes = ['_popup', '_save', 'csrfmiddlewaretoken'];
         for (var attr in data) {
             if (excludes.indexOf(attr) < 0 && data[attr] != null) {

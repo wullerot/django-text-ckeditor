@@ -1,16 +1,16 @@
-var DjangoLinkDialog = (function ($) {
+var DajngoImageDialog = (function ($) {
     'use strict';
 
     var iframe_html = '<iframe style="position:static; width:100%; height:100%; border:none;" />';
 
-    CKEDITOR.dialog.add('djangolink', djangolink_dialog);
+    CKEDITOR.dialog.add('djangoimage', djangoimage_dialog);
 
-    function djangolink_dialog(instance) {
+    function djangoimage_dialog(instance) {
         var anchors;
         var editor = instance;
-        var plugin = CKEDITOR.plugins.djangolink;
-        var iframeURL = editor.config.djangolinkIframeURL;
-        var verifyURL = editor.config.djangolinkVerifyURL;
+        var plugin = CKEDITOR.plugins.djangoimage;
+        var iframeURL = editor.config.djangoimageIframeURL;
+        var verifyURL = editor.config.djangoimageVerifyURL;
         var dialogInstance = {
             onOk: on_ok,
             onShow: on_show,
