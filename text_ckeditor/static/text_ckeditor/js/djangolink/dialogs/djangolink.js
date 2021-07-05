@@ -16,7 +16,7 @@ var DjangoLinkDialog = (function ($) {
             onShow: on_show,
             title: 'Link',
             width: 800,
-            height: 400,
+            height: 250,
             minHeight: 300,
             contents: [{ elements: [{ type: 'html', html: iframe_html }] }]
         };
