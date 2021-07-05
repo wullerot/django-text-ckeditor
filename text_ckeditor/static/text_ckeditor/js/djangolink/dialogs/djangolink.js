@@ -27,6 +27,7 @@ var DjangoLinkDialog = (function ($) {
             var $iframe = $(dialog.parts.contents.$).find('iframe').contents();
             var $form = $iframe.find('form');
             var $fields = $form.find("input, select");
+
             for (var i = 0; i < $fields.length; i++) {
                 data[$fields[i].name] = $fields[i].value;
             }
@@ -38,11 +39,13 @@ var DjangoLinkDialog = (function ($) {
             });
 
             function success(response, status, xhr) {
+
                 // django form error ------------------------------------------
                 if (response.valid != 'true') {
                     show_form_errors($form, response);
                     return false;
                 }
+
                 // no form errors ---------------------------------------------
                 var selection = editor.getSelection();
                 var element = dialog.getSelectedElement()
@@ -52,8 +55,8 @@ var DjangoLinkDialog = (function ($) {
                 } else {
                     edit_link_element(selection, element, attributes, data)
                 }
-                //$( 'body', $iframe ).remove();
-                //CKEDITOR.dialog.getCurrent().hide();
+                $('body', $iframe).remove();
+                CKEDITOR.dialog.getCurrent().hide();
             };
 
             return false;
