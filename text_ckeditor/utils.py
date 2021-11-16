@@ -56,14 +56,15 @@ class CKEditorHtml(object):
             if key.startswith('data-'):
                 field = key.replace('data-', '', 1)
                 value = link.attrib.pop(key)
-                if hasattr(self.empty_link, field) and value:
-                    # TODO find a proper way to do this
-                    try:
+                if value:
+                    # convert to id int field if foreign key
+                    if hasattr(self.empty_link, '{}_id'.format(field)):
+                        field = '{}_id'.format(field)
                         value = int(value)
-                        field = '{0}_id'.format(field)
-                    except Exception:
-                        pass
-                    kwargs.update({field: value})
+                    # if we the filed exists and the value is set add it to the
+                    # model creation kwargs
+                    if hasattr(self.empty_link, field):
+                        kwargs.update({field: value})
         obj = self.link_model(**kwargs)
         href = obj.get_link()
         if hasattr(obj, 'get_css_class'):
