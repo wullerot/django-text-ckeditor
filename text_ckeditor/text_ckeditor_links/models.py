@@ -40,3 +40,6 @@ class Link(AbstractLink):
                 and getattr(self, 'link_url_target', '')):
             return self.link_url_target
         return ''
+
+    def get_email(self):
+        return '{}'.format(self.link_email)

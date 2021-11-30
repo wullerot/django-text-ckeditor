@@ -26,7 +26,13 @@ class CKEditorHtml(object):
         self.input = input
         self.empty_link = self.link_model()
 
-    def render(self):
+    def render(self, unprotected=False):
+        # set if email needs scrambling
+        if not conf.CKEDITOR_HTML_PROTECT_MAILTO:
+            self.unprotected = True
+        else:
+            self.unprotected = unprotected
+
         output = ''
         fragments = fragments_fromstring(self.input)
         for fragment in fragments:
@@ -50,39 +56,42 @@ class CKEditorHtml(object):
             if key.startswith('data-'):
                 field = key.replace('data-', '', 1)
                 value = link.attrib.pop(key)
-                if hasattr(self.empty_link, field) and value:
-                    # TODO find a proper way to do this
-                    try:
+                if value:
+                    # convert to id int field if foreign key
+                    if hasattr(self.empty_link, '{}_id'.format(field)):
+                        field = '{}_id'.format(field)
                         value = int(value)
-                        field = '{0}_id'.format(field)
-                    except Exception:
-                        pass
-                    kwargs.update({field: value})
+                    # if we the filed exists and the value is set add it to the
+                    # model creation kwargs
+                    if hasattr(self.empty_link, field):
+                        kwargs.update({field: value})
         obj = self.link_model(**kwargs)
         href = obj.get_link()
         if hasattr(obj, 'get_css_class'):
             css_class = obj.get_css_class()
         else:
             css_class = ''
-        if 'mailto:' in href and conf.CKEDITOR_HTML_PROTECT_MAILTO:
-            if hasattr(obj, 'get_email'):
-                href = obj.get_email()
-            else:
-                href = href.replace('mailto:', '')
-            if link.text:
-                text = link.text
-            else:
-                text = href
-            mail = mail_to_js(href, link_text=text, css_class=css_class)
-            link_new = fragment_fromstring(mail)
-            link.addnext(link_new)
-            link.getparent().remove(link)
+        if 'mailto:' in href:
+            self._render_email(obj, link, href, css_class)
         else:
             link.set('href', href)
             if hasattr(obj, 'get_target'):
                 link.set('target', obj.get_target())
             if css_class:
                 link.set('class', css_class)
+
+    def _render_email(self, obj, link, href, css_class=''):
+        email = obj.get_email()
+        text = link.text or email
+        if self.unprotected:
+            link.set('href', 'mailto:{}'.format(email))
+            if css_class:
+                link.set('class', css_class)
+        else:
+            mail = mail_to_js(email, link_text=text, css_class=css_class)
+            link_new = fragment_fromstring(mail)
+            link.addnext(link_new)
+            link.getparent().remove(link)
 
 
 def mail_to_js(email, *args, **kwargs):
@@ -91,7 +100,10 @@ def mail_to_js(email, *args, **kwargs):
     css_class = kwargs.get('css_class', '')
     email_array_content = ''
     text_array_content = ''
-    def r(c): return '"' + str(ord(c)) + '",'  # NOQA
+
+    def r(c):
+        return '"' + str(ord(c)) + '",'
+
     for c in email:
         email_array_content += r(c)
     for c in text:

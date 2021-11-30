@@ -7,8 +7,15 @@
     </head>
     <body>
         <div class="object-list">
+            <h2>protected</h2>
             {% for obj in object_list %}
                 <div class="object">{{ obj.text_html|text_ckeditor_render }}</div>
+            {% endfor %}
+        </div>
+        <div class="object-list">
+            <h2>unprotected</h2>
+            {% for obj in object_list %}
+                <div class="object">{{ obj.text_html|text_ckeditor_render_unprotected }}</div>
             {% endfor %}
         </div>
     </body>

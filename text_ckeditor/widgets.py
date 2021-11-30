@@ -34,13 +34,8 @@ class CKEditorWidget(Textarea):
 
     def render(self, name, value='', attrs=None, renderer=None):
         # TODO implement the new renderer method from django >= 2
-        try:
-            # django < 1.11
-            attrs = self.build_attrs(attrs, name=name)
-        except TypeError:
-            # django >= 1.11
-            attrs['name'] = name
-            attrs = self.build_attrs(self.attrs, attrs)
+        attrs['name'] = name
+        attrs = self.build_attrs(self.attrs, attrs)
         attrs_tags = ' '.join(
             ['{}="{}"'.format(k, v) for k, v in attrs.items()]
         )

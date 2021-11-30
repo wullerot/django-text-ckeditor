@@ -1,22 +1,22 @@
-var DjangoLinkDialog = (function ($) {
+var DajngoImageDialog = (function ($) {
     'use strict';
 
     var iframe_html = '<iframe style="position:static; width:100%; height:100%; border:none;" />';
 
-    CKEDITOR.dialog.add('djangolink', djangolink_dialog);
+    CKEDITOR.dialog.add('djangoimage', djangoimage_dialog);
 
-    function djangolink_dialog(instance) {
+    function djangoimage_dialog(instance) {
         var anchors;
         var editor = instance;
-        var plugin = CKEDITOR.plugins.djangolink;
-        var iframeURL = editor.config.djangolinkIframeURL;
-        var verifyURL = editor.config.djangolinkVerifyURL;
+        var plugin = CKEDITOR.plugins.djangoimage;
+        var iframeURL = editor.config.djangoimageIframeURL;
+        var verifyURL = editor.config.djangoimageVerifyURL;
         var dialogInstance = {
             onOk: on_ok,
             onShow: on_show,
             title: 'Link',
             width: 800,
-            height: 250,
+            height: 400,
             minHeight: 300,
             contents: [{ elements: [{ type: 'html', html: iframe_html }] }]
         };
@@ -27,7 +27,6 @@ var DjangoLinkDialog = (function ($) {
             var $iframe = $(dialog.parts.contents.$).find('iframe').contents();
             var $form = $iframe.find('form');
             var $fields = $form.find("input, select");
-
             for (var i = 0; i < $fields.length; i++) {
                 data[$fields[i].name] = $fields[i].value;
             }
@@ -39,13 +38,11 @@ var DjangoLinkDialog = (function ($) {
             });
 
             function success(response, status, xhr) {
-
                 // django form error ------------------------------------------
                 if (response.valid != 'true') {
                     show_form_errors($form, response);
                     return false;
                 }
-
                 // no form errors ---------------------------------------------
                 var selection = editor.getSelection();
                 var element = dialog.getSelectedElement()
@@ -55,8 +52,8 @@ var DjangoLinkDialog = (function ($) {
                 } else {
                     edit_link_element(selection, element, attributes, data)
                 }
-                $('body', $iframe).remove();
-                CKEDITOR.dialog.getCurrent().hide();
+                //$( 'body', $iframe ).remove();
+                //CKEDITOR.dialog.getCurrent().hide();
             };
 
             return false;
