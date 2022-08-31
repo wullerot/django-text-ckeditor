@@ -1,1 +1,1 @@
-moved to https://codeberg.org/wullerot/django-text-ckeditor
+moved to https://codeberg.org/RouxCode/django-text-ckeditor
